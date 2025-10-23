@@ -58,7 +58,7 @@ public class SimUtils {
 	public static Caballo crearCaballoAleatorio(String nombreBase, Jinete j) {
 		double peso= (int) (Math.random()*100)+100;
 		Log.debug("Peso:" + peso);
-		if (peso<200) {
+		if (peso>200) {
 			peso=200;
 
 			Log.debug("Peso nuevo:" + peso);
@@ -82,4 +82,5 @@ public class SimUtils {
 		Caballo caballoRandom= new Caballo (nombreBase, peso, velocidad,  experiencia, j );
 		return caballoRandom;
 	}
+	
 }

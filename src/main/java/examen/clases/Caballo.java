@@ -101,10 +101,10 @@ public class Caballo implements Participable, Avanzable, Imprimible{
 	
 	@Override
 	public String getIdentificador() {
-		
-		return null;
+		String id = nombre;
+		return id;
 	}
-
+	
 
 
 

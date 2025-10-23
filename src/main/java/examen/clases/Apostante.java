@@ -5,7 +5,7 @@ import main.java.examen.utilidades.SimUtils;
 
 public class Apostante extends Persona implements Imprimible{
 	
-	double saldo = SimUtils.pideDatoNumerico("Cuanto saldo tienes?"); //might be wrong
+	double saldo = SimUtils.pideDatoNumerico("Cuanto saldo tienes " +getNombre()+ "?"); //might be wrong
 	
 	
 	

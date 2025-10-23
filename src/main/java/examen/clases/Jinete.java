@@ -35,8 +35,8 @@ public class Jinete extends Persona implements Participable{
 
 	@Override
 	public String getIdentificador() {
-		// TODO Auto-generated method stub
-		return null;
+		String id = nombre;
+		return id;
 	}
 
 }

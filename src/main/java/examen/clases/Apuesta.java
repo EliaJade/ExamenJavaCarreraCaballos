@@ -1,8 +1,14 @@
 package main.java.examen.clases;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import main.java.examen.utilidades.SimUtils;
 
 public class Apuesta {
+
+	private final static Logger Log = LoggerFactory.getLogger(Apuesta.class);
+	
 	
 	Apostante apostante;
 	Caballo caballo;
@@ -62,31 +68,22 @@ public class Apuesta {
 //
 //		
 //	}
-	
-	public double apostarDinero() {
-		double cantidadApostada = 0;
+	public double apostarDinero(Apostante apostante) {
+	double cantidadApostada = 0;
 
-		double cantidadQuererApostar= SimUtils.pideDatoNumerico("Cuanto quieres apostar?");
-		if(cantidadQuererApostar<=apostante.getSaldo()) {
-			cantidadApostada = cantidadQuererApostar;
-		}
-		else {
-			System.out.println("No tienes suficiente saldo");
-		}
-		
-		
-		return cantidadApostada;
-
-		
+	double cantidadQuererApostar= SimUtils.pideDatoNumerico("Cuanto quieres apostar " + apostante.getNombre()+ "?");
+	if(cantidadQuererApostar<=apostante.getSaldo()) {
+		cantidadApostada = cantidadQuererApostar;
 	}
-	public String apostarCaballo() {
-		String caballoApostado = "";
-		String caballoQuererApostar= SimUtils.pideDatoCadena("En quien quieres aposatar?");
-		if(caballoQuererApostar.equalsIgnoreCase(caballo.getIdentificador())) {
-			caballoApostado=caballoQuererApostar;
-			}
-		
-		return caballoApostado;
+	else {
+		System.out.println("No tienes suficiente saldo");
+	}
 	
-	}
+	
+	return cantidadApostada;
+
+	
+}
+	
+	
 }
