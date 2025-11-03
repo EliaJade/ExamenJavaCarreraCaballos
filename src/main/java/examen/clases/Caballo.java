@@ -134,21 +134,25 @@ public class Caballo implements Participable, Avanzable, Imprimible{
 
 
 	@Override
-	public String imprimeDatos() {
-		String datosCaballo = "Nombre del caballo: " + nombre + "/Peso: "+ peso + 
-				"\nJinete: "+ jinete + "\nExperiencia: " + experiencia + 
-				"\nVelocidad: " + velocidad + "km/h\nDistancia recorrido: " + metrosRecorridos ;
+	public void imprimeDatos() {
+		System.out.println(this);
 		
-		return datosCaballo;
 	}
 
+
+	@Override
+	public String toString() {
+		return "Nombre del caballo: " + nombre + "/Peso: "+ peso + 
+				"\nJinete: "+ jinete + "\nExperiencia: " + experiencia + 
+				"\nVelocidad: " + velocidad + "km/h\nDistancia recorrido: " + metrosRecorridos;
+	}
 
 	public void resetear() {
 		metrosRecorridos=0;
 	}
 	
-	public void sumarExperiencia() { //segun el enunciado debe tener el parametro de int puntos
-		experiencia = experiencia+1;
+	public void sumarExperiencia(int puntos) { //segun el enunciado debe tener el parametro de int puntos
+		this.experiencia = experiencia+puntos;
 	}
 
 

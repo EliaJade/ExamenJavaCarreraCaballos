@@ -10,9 +10,11 @@ public class Apuesta {
 	private final static Logger Log = LoggerFactory.getLogger(Apuesta.class);
 	
 	
-	Apostante apostante;
-	Caballo caballo;
-	double importe;
+	private Apostante apostante;
+	private Caballo caballo;
+	private double importe;
+	
+	
 	public Apuesta(Apostante apostante, Caballo caballo, double importe) {
 		super();
 		this.apostante = apostante;
@@ -38,36 +40,7 @@ public class Apuesta {
 		this.importe = importe;
 	}
 	
-//	public double apostarDinero() {
-//		String Y_N = "";
-//		double cantidadApostada = 0;
-//		String caballoApostado = "";
-//
-//		
-//		while(!(Y_N.equalsIgnoreCase("yes"))) {
-//		String caballoQuererApostar= SimUtils.pideDatoCadena("En quien quieres aposatar?");
-//		double cantidadQuererApostar= SimUtils.pideDatoNumerico("Cuanto quieres apostar?");
-//		if(cantidadQuererApostar<=apostante.getSaldo()) {
-//			cantidadApostada = cantidadQuererApostar;
-//		}
-//		else {
-//			System.out.println("No tienes suficiente saldo");
-//		}
-//		
-//		if(caballoQuererApostar.equalsIgnoreCase(caballo.getIdentificador())) {
-//			caballoApostado=caballoQuererApostar;
-//			Y_N= SimUtils.pideDatoCadena("Estas seguro que quieres apostar: " + cantidadApostada + " en " + caballo.getNombre());
-//			if(Y_N.equalsIgnoreCase("yes")) {
-//				apostante.setSaldo(apostante.saldo-cantidadApostada);
-//			}
-//		}
-//			
-//		}
-//		
-//		return ;
-//
-//		
-//	}
+
 	public double apostarDinero(Apostante apostante) {
 	double cantidadApostada = 0;
 

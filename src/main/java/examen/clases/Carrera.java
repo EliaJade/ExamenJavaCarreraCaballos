@@ -11,16 +11,24 @@ public class Carrera {
 	private final static Logger Log = LoggerFactory.getLogger(Carrera.class);
 	
 
-	String  nombre;
-	double distanciaObjetivo = 200;
-	List<Caballo> participantes = new ArrayList();
-	List<Apuesta> apuestas = new ArrayList();
-	public Carrera(String nombre, double distanciaObjetivo, List<Caballo> participantes, List<Apuesta> apuestas) {
+	private String  nombre;
+	private double distanciaObjetivo = 200;
+	private List<Caballo> participantes;
+	private List<Apuesta> apuestas;
+	
+	public Carrera(String nombre, double distanciaObjetivo, List<Caballo> participantes) {
 		super();
 		this.nombre = nombre;
 		this.distanciaObjetivo = distanciaObjetivo;
 		this.participantes = participantes;
-		this.apuestas = apuestas;
+		this.apuestas = new ArrayList<>();
+	}
+	public Carrera(String nombre, double distanciaObjetivo) {
+		super();
+		this.nombre = nombre;
+		this.distanciaObjetivo = distanciaObjetivo;
+		this.participantes = new ArrayList<>();
+		this.apuestas = new ArrayList<>();
 	}
 	public String getNombre() {
 		return nombre;
@@ -45,6 +53,11 @@ public class Carrera {
 	}
 	public void setApuestas(List<Apuesta> apuestas) {
 		this.apuestas = apuestas;
+	}
+	
+	//to add caballo to list of caballo
+	public void addCaballo(Caballo caballo) {
+		this.participantes.add(caballo);
 	}
 	
 	public void iniciar() {

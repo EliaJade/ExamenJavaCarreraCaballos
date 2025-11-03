@@ -5,7 +5,7 @@ import main.java.examen.utilidades.SimUtils;
 
 public class Apostante extends Persona implements Imprimible{
 	
-	double saldo = SimUtils.pideDatoNumerico("Cuanto saldo tienes " +getNombre()+ "?"); //might be wrong
+	private double saldo = SimUtils.pideDatoNumerico("Cuanto saldo tienes " +getNombre()+ "?"); //might be wrong
 	
 	
 	
@@ -37,15 +37,24 @@ public class Apostante extends Persona implements Imprimible{
 
 
 
+       
+
+
+	@Override
+	public String toString() {
+		return "Saldo inicial: " + saldo + 
+				"/nNombre del apostador: " + getNombre() + "/nEdad: "+ getEdad();
+	}
+
+
+
+
 
 
 
 	@Override
-	public String imprimeDatos() {
-		
-		String datosApuesta = "Saldo inicial: " + saldo + 
-				"/nNombre del apostador: " + nombre + "/nEdad: "+ edad;
-		return datosApuesta;
+	public void imprimeDatos() {
+		System.out.println(this);
 	}
 
 

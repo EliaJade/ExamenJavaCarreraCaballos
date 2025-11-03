@@ -3,12 +3,13 @@ package main.java.examen.clases;
 public class Persona {
 	
 	
+	//remember to make variables private
+	private String nombre;
 	
-	String nombre;
 	
 	
+	private int edad;
 	
-	int edad;
 	public Persona(String nombre, int edad) {
 		super();
 		this.nombre = nombre;

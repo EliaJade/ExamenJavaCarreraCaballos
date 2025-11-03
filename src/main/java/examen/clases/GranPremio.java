@@ -1,6 +1,7 @@
 package main.java.examen.clases;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -12,36 +13,12 @@ public class GranPremio {
 
 	private final static Logger Log = LoggerFactory.getLogger(GranPremio.class);
 
-	String nombre;
-	List<Carrera> carreras;
-	List <Apostante> apostantes = new ArrayList();
-	List <Caballo> caballos = new ArrayList();
+	private String nombre;
 	
-	public static void main(String[]args) {
+	private List <Apostante> apostantes;
 
-		Jinete jinete1 = new Jinete("Josef", 20, 1);
-		Jinete jinete2 = new Jinete("Samuel", 28, 5 );
-		Jinete jinete3 = new Jinete("Ford", 36, 10 );
+	private List<Carrera> carreras;
 	
-	
-		Caballo caballo1 =(SimUtils.crearCaballoAleatorio("Midnight", jinete1));
-		Caballo caballo2 =(SimUtils.crearCaballoAleatorio("Juan", jinete2));
-		Caballo caballo3 =(SimUtils.crearCaballoAleatorio("Storm", jinete3));
-		
-		Apostante apostante1 = new Apostante("Flor", 30);
-		Apostante apostante2 = new Apostante("Lucifer", 1000);
-		
-		
-		GranPremio granPremio = new GranPremio("Gran Premio");
-		granPremio.agregarApostante(apostante1);
-		granPremio.agregarApostante(apostante2);
-		granPremio.agregarCaballo(caballo1);
-		granPremio.agregarCaballo(caballo2);
-		granPremio.agregarCaballo(caballo3);
-		granPremio.empezarGranPremio();
-
-		
-	}
 	
 
 	
@@ -53,6 +30,12 @@ public class GranPremio {
 		this.nombre = nombre;
 //		this.carreras = carreras;
 //		this.apostantes = apostantes;
+	}
+	public GranPremio(String nombre, List<Carrera> carreras) {
+		super();
+		this.nombre = nombre;
+		this.carreras = carreras;
+		this.apostantes = new ArrayList<>();
 	}
 	public String getNombre() {
 		return nombre;
@@ -74,16 +57,20 @@ public class GranPremio {
 	}
 	
 	
-	public void agregarApostante(Apostante apostante){
-		apostantes.add(apostante);
-		
-	}
-	public void agregarCaballo(Caballo caballo){
-		caballos.add(caballo);
-		
-	}
+//	public void agregarApostante(Apostante apostante){
+//		apostantes.add(apostante);
+//		
+//	}
+//	public void agregarCaballo(Caballo caballo){
+//		caballos.add(caballo);
+//		
+//	}
 	
 	public void empezarGranPremio() {
+
+		System.out.println("Empezamos el Gran Premio");
+		
+		
 		int contadorNumApuesta =0;
 		for (Apostante apostante : apostantes) {
 			Caballo caballoApostado = apostarCaballo(apostante);
@@ -98,6 +85,45 @@ public class GranPremio {
 	public void mostrarResumen() {
 		
 	}
+	
+	public void init(){
+		crearCarrera();
+		this.apostantes = SimUtils.crearApostantes();
+	}
+	
+	public void crearCarrera() {
+		//CREAR Jinete
+		Jinete jinete1 = new Jinete("John", 20, 2);
+		Jinete jinete2 = new Jinete("Pepe", 32, 12);
+		Jinete jinete3 = new Jinete("Samara", 23, 4);
+		
+		
+		//CREAR CABALLOS
+		Caballo caballo1 = SimUtils.crearCaballoAleatorio("Midnight", jinete1);
+		Caballo caballo2 = SimUtils.crearCaballoAleatorio("Bullseye", jinete2);
+		Caballo caballo3 = SimUtils.crearCaballoAleatorio("Gordon", jinete3);
+		
+		
+		//CREar CARRERAS
+		Carrera carrera1 = new Carrera("Carrera 1", 500);
+		Carrera carrera2 = new Carrera ("Carrera 2", 50);
+		
+		
+		List<Caballo> caballos = Arrays.asList(caballo1, caballo2, caballo3);
+		
+		carrera1.setParticipantes(caballos);
+		carrera2.setParticipantes(caballos);
+		
+		Carrera carrera3 = new Carrera ("Carrera 3", 700, caballos);
+//		carrera3.getParticipantes().add(caballo3);
+//		carrera3.addCaballo(caballo3);
+		
+		this.carreras = Arrays.asList(carrera1, carrera2, carrera3);
+		
+		
+	}
+	
+	
 
 	public double apostarDinero(Apostante apostante, Caballo caballoApostado) {
 		double cantidadApostada = 0;
@@ -111,11 +137,9 @@ public class GranPremio {
 			}
 		}
 		
-//		
-		
 		String Y_N= SimUtils.pideDatoCadena("Estas seguro que quieres apostar: " + cantidadApostada +" euros en " + caballoApostado.getNombre());
 		if(Y_N.equalsIgnoreCase("yes")) {
-			apostante.setSaldo(apostante.saldo-cantidadApostada);
+			apostante.setSaldo(apostante.getSaldo()-cantidadApostada);
 		}
 		return cantidadApostada;
 
@@ -123,21 +147,24 @@ public class GranPremio {
 	}
 	public Caballo apostarCaballo(Apostante apostante) {
 		Caballo caballoApostado = null;
-		mostrarCaballos();
+//		mostrarCaballos();
 		while(caballoApostado==null) {
 			String caballoQuererApostar= SimUtils.pideDatoCadena("En quien quieres aposatar " + apostante.getNombre() + "?");
-			for (Caballo caballo : caballos) {
-				if(caballoQuererApostar.equalsIgnoreCase(caballo.getIdentificador())) {
-					caballoApostado=caballo;
-					Log.info(caballoApostado.getNombre());
+			for (Carrera carrera : carreras) {
+				for (Caballo caballo : carrera.getParticipantes()) {
+					if(caballoQuererApostar.equalsIgnoreCase(caballo.getIdentificador())) {
+						caballoApostado=caballo;
+						Log.info(caballoApostado.getNombre());
+					}
+					
+					}
+				if(caballoApostado==null) {
+					System.err.println("No has apostado a ningun caballo");
+					Log.error("caballoApostado is null");
 				}
-				
-				}
-			if(caballoApostado==null) {
-				System.err.println("No has apostado a ningun caballo");
-				Log.error("caballoApostado is null");
 			}
-		}
+			}
+			
 		
 		
 		
@@ -146,10 +173,14 @@ public class GranPremio {
 	}
 	
 	public void mostrarCaballos() {
-		for (Caballo caballo : caballos) {
-			System.out.println("==============\nNombre: " +caballo.getNombre() +"\nVelocidad: " + caballo.getVelocidad()+ 
-					"\nPeso: "+caballo.getPeso() + "\nJinete: "+caballo.getJinete().getNombre() + "\nExperiencia de jinete: "+ caballo.getJinete().getAniosExperiencia());
+		
+		for (Carrera carrera : carreras) {
+			for (Caballo caballo : carrera.getParticipantes()) {
+				System.out.println("==============\nNombre: " +caballo.getNombre() +"\nVelocidad: " + caballo.getVelocidad()+ 
+						"\nPeso: "+caballo.getPeso() + "\nJinete: "+caballo.getJinete().getNombre() + "\nExperiencia de jinete: "+ caballo.getJinete().getAniosExperiencia());
+			}
 		}
+		
 	}
 	
 

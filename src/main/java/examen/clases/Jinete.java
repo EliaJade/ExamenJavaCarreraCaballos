@@ -1,11 +1,14 @@
 package main.java.examen.clases;
 
+import java.util.Random;
+
 import main.java.examen.interfaces.Participable;
 
 public class Jinete extends Persona implements Participable{
 	
 
-	int aniosExperiencia;
+	private int aniosExperiencia;
+	private String id;
 	
 	
 	public Jinete(String nombre, int edad, int aniosExperiencia) {
@@ -35,8 +38,11 @@ public class Jinete extends Persona implements Participable{
 
 	@Override
 	public String getIdentificador() {
-		String id = nombre;
+	Random random = new Random();
+	this.id = "Jinete "+random.nextInt(1,100);
 		return id;
+//		String id = getNombre();
+//		return id;
 	}
 
 }
