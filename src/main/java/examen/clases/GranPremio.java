@@ -74,7 +74,7 @@ public class GranPremio {
 		int contadorNumApuesta =0;
 		for (Apostante apostante : apostantes) {
 			Caballo caballoApostado = apostarCaballo(apostante);
-			double dineroApostado = apostarDinero(apostante, caballoApostado);
+			double dineroApostado = apostante.apostarDinero(caballoApostado);
 			Apuesta apuesta= new Apuesta(apostante, caballoApostado, dineroApostado);
 		
 			
@@ -125,32 +125,9 @@ public class GranPremio {
 	
 	
 
-	public double apostarDinero(Apostante apostante, Caballo caballoApostado) {
-		double cantidadApostada = 0;
-		while(!(cantidadApostada>0 && cantidadApostada<=apostante.getSaldo())) {
-			double cantidadQuererApostar= SimUtils.pideDatoNumerico("Cuanto quieres apostar " + apostante.getNombre()+ "?");
-			if(cantidadQuererApostar<=apostante.getSaldo()) {
-				cantidadApostada = cantidadQuererApostar;
-			}
-			else {
-				System.err.println("No tienes suficiente saldo");
-			}
-		}
-		
-		String Y_N= SimUtils.pideDatoCadena("Estas seguro que quieres apostar: " + cantidadApostada +" euros en " + caballoApostado.getNombre());
-		if(Y_N.equalsIgnoreCase("si")) {
-			double saldoRestante= apostante.getSaldo()-cantidadApostada;
-			apostante.setSaldo(saldoRestante);
-			Log.info("Has apostado " + cantidadApostada + " a " + caballoApostado.getNombre() + " y se ha quedado con " + saldoRestante );
-		}
-		else {
-			cantidadApostada = 0;
-			Log.info("No has apostado nada al caballo " + caballoApostado);
-		}
-		return cantidadApostada;
-
-		
-	}
+	
+	
+	
 	public Caballo apostarCaballo(Apostante apostante) {
 		Caballo caballoApostado = null;
 		mostrarCaballos();
@@ -162,20 +139,14 @@ public class GranPremio {
 						caballoApostado=caballo;
 						Log.info(caballoApostado.getNombre());
 					}
-					
-					}
+				}
 				if(caballoApostado==null) {
 					System.err.println("No has apostado a ningun caballo");
 					Log.error("caballoApostado is null");
 				}
 			}
-			}
-			
-		
-		
-		
+		}
 		return caballoApostado;
-	
 	}
 	
 	public void mostrarCaballos() {
@@ -191,8 +162,6 @@ public class GranPremio {
 		}
 		
 	}
-	
-
 	
 
 	
