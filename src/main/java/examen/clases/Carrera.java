@@ -15,6 +15,7 @@ public class Carrera {
 	private double distanciaObjetivo = 200;
 	private List<Caballo> participantes;
 	private List<Apuesta> apuestas;
+	private Caballo caballoGanador;
 	
 	public Carrera(String nombre, double distanciaObjetivo, List<Caballo> participantes) {
 		super();
@@ -60,6 +61,12 @@ public class Carrera {
 		this.participantes.add(caballo);
 	}
 	
+	public Caballo getCaballoGanador() {
+		return caballoGanador;
+	}
+	public void setCaballoGanador(Caballo caballoGanador) {
+		this.caballoGanador = caballoGanador;
+	}
 	public void iniciar() {
 		boolean ganador = false;
 	int contadorTurno = 1;
@@ -73,12 +80,14 @@ public class Carrera {
 				double distanciaRecorrido = caballo.calcularAvanceTurno(); //this might not work
 				caballo.aplicarAvance(distanciaRecorrido);
 				
-				System.out.println("El jinete" + jinete.getNombre() + " con su caballo " + caballo.getNombre() +" han avanzado un total de " + distanciaRecorrido + "m"); 
+				System.out.println("El jinete" + jinete.getNombre() + " con su caballo " + caballo.getNombre() +" han avanzado un total de " + caballo.getMetrosRecorridos() + "m de los " + distanciaObjetivo + "m de la carrera"); 
 			
-				if (distanciaRecorrido>=distanciaObjetivo) {
+				if (caballo.metrosRecorridos>=distanciaObjetivo) {
 					Log.debug("Ha entrado en el if de ganador cambiandolo a true");
 					ganador = true;
-					;// falta poner aqui el metodo de decir el ganador o sino el dialogo
+					caballoGanador=caballo;
+					System.out.println("El caballo " + caballoGanador.getNombre() + " ha ganado");
+					// falta poner aqui el metodo de decir el ganador o sino el dialogo
 					break;
 				}
 				

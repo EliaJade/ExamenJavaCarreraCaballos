@@ -111,10 +111,13 @@ public class Caballo implements Participable, Avanzable, Imprimible{
 	@Override
 	public double calcularAvanceTurno() {
 		int baseAleatoria= (int) (Math.random()*10)+1;
-		if (baseAleatoria >10) {
-			baseAleatoria= baseAleatoria-1;
-		}
-		double avanceTurno =  baseAleatoria + velocidad + experiencia - peso;
+//		if (baseAleatoria >10) {
+//			baseAleatoria= baseAleatoria-1;
+//		}
+		System.out.println(velocidad );
+		System.out.println(experiencia );
+		System.out.println(peso );
+		double avanceTurno = (baseAleatoria*this.velocidad + this.experiencia) - this.peso/2;
 		if(avanceTurno<0) {
 			avanceTurno = 0;
 		}
@@ -127,7 +130,7 @@ public class Caballo implements Participable, Avanzable, Imprimible{
 
 	@Override
 	public void aplicarAvance(double metros) {
-		metrosRecorridos = metros; //might be more complicated than this
+		metrosRecorridos += metros; //might be more complicated than this
 	}
 
 

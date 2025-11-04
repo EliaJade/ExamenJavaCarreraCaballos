@@ -2,6 +2,7 @@ package main.java.examen.clases;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -76,15 +77,30 @@ public class GranPremio {
 			Caballo caballoApostado = apostarCaballo(apostante);
 			double dineroApostado = apostante.apostarDinero(caballoApostado);
 			Apuesta apuesta= new Apuesta(apostante, caballoApostado, dineroApostado);
-		
+		}
+		for (Carrera carrera : carreras) {
+			carrera.iniciar();
 			
 		}
+		
+		for (Apostante apostante : apostantes) {
+			for (Carrera carrera : carreras) {
+//				if (carrera.getCaballoGanador()==cab)
+			}
+		}
+		mostrarResumen();
+		
+		
 		
 	}
 	
 	public void mostrarResumen() {
-		
+		for (Carrera carrera : carreras) {
+			System.out.println("El ganador de la carrera " + carrera.getNombre() + " de "+ carrera.getDistanciaObjetivo() + "m es " +carrera.getCaballoGanador().getNombre());
+		}
 	}
+	
+//	public void 
 	
 	public void init(){
 		crearCarrera();
@@ -122,11 +138,6 @@ public class GranPremio {
 		
 		
 	}
-	
-	
-
-	
-	
 	
 	public Caballo apostarCaballo(Apostante apostante) {
 		Caballo caballoApostado = null;
