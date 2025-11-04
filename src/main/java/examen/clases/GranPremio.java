@@ -138,8 +138,14 @@ public class GranPremio {
 		}
 		
 		String Y_N= SimUtils.pideDatoCadena("Estas seguro que quieres apostar: " + cantidadApostada +" euros en " + caballoApostado.getNombre());
-		if(Y_N.equalsIgnoreCase("yes")) {
-			apostante.setSaldo(apostante.getSaldo()-cantidadApostada);
+		if(Y_N.equalsIgnoreCase("si")) {
+			double saldoRestante= apostante.getSaldo()-cantidadApostada;
+			apostante.setSaldo(saldoRestante);
+			Log.info("Has apostado " + cantidadApostada + " a " + caballoApostado.getNombre() + " y se ha quedado con " + saldoRestante );
+		}
+		else {
+			cantidadApostada = 0;
+			Log.info("No has apostado nada al caballo " + caballoApostado);
 		}
 		return cantidadApostada;
 
@@ -147,12 +153,12 @@ public class GranPremio {
 	}
 	public Caballo apostarCaballo(Apostante apostante) {
 		Caballo caballoApostado = null;
-//		mostrarCaballos();
+		mostrarCaballos();
 		while(caballoApostado==null) {
 			String caballoQuererApostar= SimUtils.pideDatoCadena("En quien quieres aposatar " + apostante.getNombre() + "?");
 			for (Carrera carrera : carreras) {
 				for (Caballo caballo : carrera.getParticipantes()) {
-					if(caballoQuererApostar.equalsIgnoreCase(caballo.getIdentificador())) {
+					if(caballoQuererApostar.equalsIgnoreCase(caballo.getNombre())) {
 						caballoApostado=caballo;
 						Log.info(caballoApostado.getNombre());
 					}
@@ -175,9 +181,12 @@ public class GranPremio {
 	public void mostrarCaballos() {
 		
 		for (Carrera carrera : carreras) {
+			System.out.println("<<<<<<<<<<<<<<<<<<\nCarrera " + carrera.getNombre() + "\n\tDistancia: " + carrera.getDistanciaObjetivo());
+			int contador = 1;
 			for (Caballo caballo : carrera.getParticipantes()) {
-				System.out.println("==============\nNombre: " +caballo.getNombre() +"\nVelocidad: " + caballo.getVelocidad()+ 
-						"\nPeso: "+caballo.getPeso() + "\nJinete: "+caballo.getJinete().getNombre() + "\nExperiencia de jinete: "+ caballo.getJinete().getAniosExperiencia());
+				System.out.println("==============\nCaballo " + contador + "\n\tNombre: " +caballo.getNombre() +"\n\tVelocidad: " + caballo.getVelocidad()+ 
+						"\n\tPeso: "+caballo.getPeso() + "\n\tJinete: "+caballo.getJinete().getNombre() + "\n\tExperiencia de jinete: "+ caballo.getJinete().getAniosExperiencia());
+				contador ++;
 			}
 		}
 		

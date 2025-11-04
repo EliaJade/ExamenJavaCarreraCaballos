@@ -6,7 +6,6 @@ public class Main {
 		GranPremio granPremio = new GranPremio("Gran Premio");
 		granPremio.init();
 
-		granPremio.mostrarCaballos();
 		granPremio.empezarGranPremio();
 	}
 }
