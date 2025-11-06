@@ -70,34 +70,58 @@ public class GranPremio {
 	public void empezarGranPremio() {
 
 		System.out.println("Empezamos el Gran Premio");
-		
+		Caballo caballoApostado = null;
 		
 		int contadorNumApuesta =0;
-		for (Apostante apostante : apostantes) {
-			Caballo caballoApostado = apostarCaballo(apostante);
-			double dineroApostado = apostante.apostarDinero(caballoApostado);
-			Apuesta apuesta= new Apuesta(apostante, caballoApostado, dineroApostado);
-		}
+
 		for (Carrera carrera : carreras) {
-			carrera.iniciar();
-			
-		}
-		
 		for (Apostante apostante : apostantes) {
-			for (Carrera carrera : carreras) {
-//				if (carrera.getCaballoGanador()==cab)
+				caballoApostado = apostarCaballo(apostante, carrera);
+				
 			}
-		}
-		mostrarResumen();
+		carrera.setCaballoGanador(carrera.iniciar());
+
+		calculoDeApuesta(carrera);
+
+		mostrarResumen(carrera);
+
+			}
+
+		
+		
+		
 		
 		
 		
 	}
 	
-	public void mostrarResumen() {
-		for (Carrera carrera : carreras) {
+	
+	public void calculoDeApuesta( Carrera carrera) {
+			for (Apostante apostante : apostantes) {
+				
+			
+				for (Apuesta apuesta : apostante.getApuestasDelApostante()) {
+					System.out.println(apuesta.getCaballo().getNombre());
+					System.out.println(carrera.getCaballoGanador().nombre);
+					if (carrera.getCaballoGanador().getNombre()==apuesta.getCaballo().getNombre()) {
+						
+						System.out.println("El la " + carrera.getApuestas() +" "+ apostante.getNombre() + " ha apostado " +apuesta.getImporte());
+						System.out.println(apostante.getNombre() + " le queda " + apostante.getSaldo() + " despues de la apuesta");
+						apostante.setSaldo(apostante.getSaldo() + apuesta.getImporte()*5); 
+						System.out.println(apostante.getNombre()+ ": " + apostante.getSaldo());
+						
+					
+					}
+				}
+			}
+			
+	}
+	public void mostrarResumen(Carrera carrera) {
 			System.out.println("El ganador de la carrera " + carrera.getNombre() + " de "+ carrera.getDistanciaObjetivo() + "m es " +carrera.getCaballoGanador().getNombre());
+		for (Apostante apostante : apostantes) {
+			System.out.println(apostante.getNombre() + "tiene una saldo de " +apostante.getSaldo() +" euros");
 		}
+		
 	}
 	
 //	public void 
@@ -139,30 +163,33 @@ public class GranPremio {
 		
 	}
 	
-	public Caballo apostarCaballo(Apostante apostante) {
+	public Caballo apostarCaballo(Apostante apostante, Carrera carrera) {
 		Caballo caballoApostado = null;
-		mostrarCaballos();
+		mostrarCaballos(carrera);
 		while(caballoApostado==null) {
-			String caballoQuererApostar= SimUtils.pideDatoCadena("En quien quieres aposatar " + apostante.getNombre() + "?");
-			for (Carrera carrera : carreras) {
+				String caballoQuererApostar= SimUtils.pideDatoCadena("En quien quieres aposatar " + apostante.getNombre() + " en la carrera de " + carrera.getDistanciaObjetivo()+"m?");
+				
 				for (Caballo caballo : carrera.getParticipantes()) {
 					if(caballoQuererApostar.equalsIgnoreCase(caballo.getNombre())) {
 						caballoApostado=caballo;
 						Log.info(caballoApostado.getNombre());
+						double dineroApostado = apostante.apostarDinero(caballoApostado);
+						Apuesta apuesta= new Apuesta(apostante, caballoApostado, dineroApostado);
+						apostante.getApuestasDelApostante().add(apuesta);
 					}
 				}
 				if(caballoApostado==null) {
 					System.err.println("No has apostado a ningun caballo");
 					Log.error("caballoApostado is null");
 				}
-			}
+			
 		}
 		return caballoApostado;
 	}
 	
-	public void mostrarCaballos() {
+	
+	public void mostrarCaballos(Carrera carrera) {
 		
-		for (Carrera carrera : carreras) {
 			System.out.println("<<<<<<<<<<<<<<<<<<\nCarrera " + carrera.getNombre() + "\n\tDistancia: " + carrera.getDistanciaObjetivo());
 			int contador = 1;
 			for (Caballo caballo : carrera.getParticipantes()) {
@@ -170,7 +197,7 @@ public class GranPremio {
 						"\n\tPeso: "+caballo.getPeso() + "\n\tJinete: "+caballo.getJinete().getNombre() + "\n\tExperiencia de jinete: "+ caballo.getJinete().getAniosExperiencia());
 				contador ++;
 			}
-		}
+		
 		
 	}
 	

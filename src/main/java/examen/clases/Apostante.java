@@ -1,5 +1,10 @@
 package main.java.examen.clases;
 
+import java.lang.reflect.Array;
+import java.util.List;
+import java.util.concurrent.CopyOnWriteArrayList;
+import java.util.concurrent.CopyOnWriteArraySet;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -11,6 +16,7 @@ public class Apostante extends Persona implements Imprimible{
 	private final static Logger Log = LoggerFactory.getLogger(Apostante.class);
 	
 	private double saldo = SimUtils.pideDatoNumerico("Cuanto saldo tienes " +getNombre()+ "?"); //might be wrong
+	private List<Apuesta> apuestasDelApostante = new CopyOnWriteArrayList<Apuesta>();
 	
 	
 	
@@ -25,6 +31,26 @@ public class Apostante extends Persona implements Imprimible{
 
 	
 	
+	public List<Apuesta> getApuestasDelApostante() {
+		return apuestasDelApostante;
+	}
+
+
+
+
+
+
+
+	public void setApuestasDelApostante(List<Apuesta> apuestasDelApostante) {
+		this.apuestasDelApostante = apuestasDelApostante;
+	}
+
+
+
+
+
+
+
 	public double getSaldo() {
 		return saldo;
 	}
@@ -64,8 +90,8 @@ public class Apostante extends Persona implements Imprimible{
 
 
 	public double apostarDinero(Caballo caballoApostado) {
-		double cantidadApostada = 0;
-		while(!(cantidadApostada>0 && cantidadApostada<=this.saldo)) {
+		double cantidadApostada = -1;
+		while(!(cantidadApostada>=0 && cantidadApostada<=this.saldo)) {
 			double cantidadQuererApostar= SimUtils.pideDatoNumerico("Cuanto quieres apostar " + this.getNombre()+ "?");
 			if(cantidadQuererApostar<=this.saldo) {
 				cantidadApostada = cantidadQuererApostar;
@@ -85,6 +111,7 @@ public class Apostante extends Persona implements Imprimible{
 			cantidadApostada = 0;
 			Log.info("No has apostado nada al caballo " + caballoApostado);
 		}
+		
 		return cantidadApostada;
 	}
 

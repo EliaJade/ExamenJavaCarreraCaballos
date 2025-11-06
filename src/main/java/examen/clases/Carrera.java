@@ -67,7 +67,7 @@ public class Carrera {
 	public void setCaballoGanador(Caballo caballoGanador) {
 		this.caballoGanador = caballoGanador;
 	}
-	public void iniciar() {
+	public Caballo iniciar() {
 		boolean ganador = false;
 	int contadorTurno = 1;
 	for (Caballo caballo : participantes) {
@@ -86,6 +86,14 @@ public class Carrera {
 					Log.debug("Ha entrado en el if de ganador cambiandolo a true");
 					ganador = true;
 					caballoGanador=caballo;
+
+					if(caballoGanador!=null) {
+						if (caballo== caballoGanador) {
+							System.out.println(caballo.getExperiencia());
+							caballo.setExperiencia(caballo.getExperiencia()+1);
+							System.out.println(caballo.getExperiencia());
+						}
+					}
 					System.out.println("El caballo " + caballoGanador.getNombre() + " ha ganado");
 					// falta poner aqui el metodo de decir el ganador o sino el dialogo
 					break;
@@ -96,7 +104,8 @@ public class Carrera {
 		
 		}
 
-	
+
+		return caballoGanador;
 	}
 	
 }
